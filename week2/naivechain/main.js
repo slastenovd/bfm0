@@ -32,7 +32,8 @@ var MessageType = {
 };
 
 var getGenesisBlock = () => {
-    return new Block(0, "0", 1465154705, "my genesis block!!", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", 0);
+    // хэш первого блока пришлось пересчитать
+    return new Block(0, "0", 1465154705, "my genesis block!!", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", 0); 
 };
 
 
@@ -111,13 +112,16 @@ var generateNextBlock = (blockData) => {
     var nextHash;
     var nextNonce = 0;
 
+    // Эмуляция расчета хэша с неверной сложностью
+    if( blockData == 'make bad block' ) {
+        return new Block(nextIndex, previousBlock.hash, nextTimestamp, blockData, calculateHash(nextIndex, previousBlock.hash, nextTimestamp, blockData, nextNonce), nextNonce);
+    }
+
     // считаем хэш с заданной сложностью 'complexity'
     do {
         nextNonce++;
         nextHash = calculateHash(nextIndex, previousBlock.hash, nextTimestamp, blockData, nextNonce);
-//        console.log(nextNonce+' '+nextHash+' '+nextHash.substr(0,1)+' '+complexity);
-//        console.log(nextHash.substr(0,1) == complexity);
-    } while ( nextHash.substr(0,complexity.length) != complexity );
+    } while ( nextHash.substr(0,complexity.length) !== complexity );
 
     return new Block(nextIndex, previousBlock.hash, nextTimestamp, blockData, nextHash, nextNonce);
 };
@@ -147,7 +151,12 @@ var isValidNewBlock = (newBlock, previousBlock) => {
         console.log(typeof (newBlock.hash) + ' ' + typeof calculateHashForBlock(newBlock));
         console.log('invalid hash: ' + calculateHashForBlock(newBlock) + ' ' + newBlock.hash);
         return false;
+    } else if (newBlock.hash.substr(0,complexity.length) !== complexity) {
+        // консенсус состоится только для блоков удовлетворяющих заданной сложности
+        console.log('invalid hash complexity: ' + newBlock.hash + ' right part should be equal ' + complexity);
+        return false;
     }
+
     return true;
 };
 

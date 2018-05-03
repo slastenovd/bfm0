@@ -1,3 +1,16 @@
+Thaks to lhartikk for great code https://github.com/lhartikk/naivechain
+
+### Внесенные изменения
+В функцию isValidNewBlock добавлено требование к сложности хэша
+для этого добавлено поле nonce в блок, а так же изменена функция расчета хэша блока
+
+Сложность задается переменной на 12 строке main.js
+ var complexity = "0000";
+
+Для майнинга "плохого" блока с плохой сложностью:
+curl -H "Content-type:application/json" --data '{"data" : "make bad block"}' http://localhost:3001/mineBlock
+
+
 # Naivechain - a blockchain implementation in 200 lines of code
 
 ### Motivation
