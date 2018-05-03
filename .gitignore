@@ -1,5 +1,2 @@
-week1\node_modules
-week1\package-lock.json
-week2\naivechain\node_modules
-week2\naivechain\npm-debug.log
-week2\naivechain\.idea
+week1/node_modules/
+week1/package-lock.json
