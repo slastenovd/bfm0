@@ -119,8 +119,7 @@ var generateNextBlock = (blockData) => {
 
     // считаем хэш с заданной сложностью 'complexity'
     do {
-        nextNonce++;
-        nextHash = calculateHash(nextIndex, previousBlock.hash, nextTimestamp, blockData, nextNonce);
+        nextHash = calculateHash(nextIndex, previousBlock.hash, nextTimestamp, blockData, ++nextNonce);
     } while ( nextHash.substr(0,complexity.length) !== complexity );
 
     return new Block(nextIndex, previousBlock.hash, nextTimestamp, blockData, nextHash, nextNonce);
