@@ -10,6 +10,7 @@ Thaks to lhartikk for great code https://github.com/lhartikk/naivechain
  var complexity = "0000";
 
 Для майнинга "плохого" блока с плохой сложностью в data надо указать "make bad block":
+
 curl -H "Content-type:application/json" --data '{"data" : "make bad block"}' http://localhost:3001/mineBlock
 
 
